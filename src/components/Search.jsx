@@ -15,6 +15,7 @@ export function Search() {
 
     function handlesubmit(e){
         e.preventDefault()
+        console.log("[DEBUG] Submitted character name:", characterName)
         getCharacterData()
     }
 
@@ -25,12 +26,15 @@ export function Search() {
         const timeStamp = new Date().getTime();
         const hash = gethash(timeStamp)
 
+        console.log("[DEBUG] privateKey:", privateKey)
+        console.log("[DEBUG] publicKey:", publicKey)
         const URL = `https://gateway.marvel.com:443/v1/public/characters?apikey=${publicKey}&hash=${hash}&ts=${timeStamp}&nameStartsWith=${characterName}&limit=100`
+        console.log("[DEBUG] Fetching URL:", URL)
         fetch(URL).then(response => response.json()).then((result) => {
             setcharacterData(result.data)
-            console.log(result)
+            console.log("[DEBUG] API result:", result)
         }).catch((error)=>{
-            console.log("There is an error : ", error)
+            console.log("[DEBUG] There is an error : ", error)
         })
     }
 
@@ -56,12 +60,12 @@ export function Search() {
         const hash = gethash(timestamp)
 
         const URL = `https://gateway.marvel.com:443/v1/public/characters/${characterId}/comics?apikey=${publicKey}&hash=${hash}&ts=${timestamp}`
-
+        console.log("[DEBUG] Fetching comics URL:", URL)
         fetch(URL).then(results => results.json()).then((results) =>{
             setcomicData(results.data)
-            console.log(results.data)
+            console.log("[DEBUG] Comics API result:", results.data)
         }).catch((error)=>{
-            console.log("Error while fetching data", data)
+            console.log("[DEBUG] Error while fetching comics data:", error)
         })
 
     }
@@ -73,7 +77,7 @@ export function Search() {
             <input type="text" placeholder="Enter Your Character" onChange={handlechange}/>
             <div className="buttons">
                 
-                <button type="submit">Get Char DatagetCharacterData</button>
+                <button type="submit">Get Character Data</button>
                 <button type="reset" className="reset" onClick={handlereset}>reset</button>
             </div>
         </form>
