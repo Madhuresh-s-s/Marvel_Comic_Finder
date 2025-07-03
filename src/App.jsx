@@ -1,4 +1,4 @@
-import { Search } from "./components/search"
+import { Search } from "./components/Search"
 
 function App() {
 
